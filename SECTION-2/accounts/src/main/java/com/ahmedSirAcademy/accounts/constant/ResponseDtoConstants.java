@@ -1,9 +1,6 @@
 package com.ahmedSirAcademy.accounts.constant;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 public class ResponseDtoConstants {
@@ -14,4 +11,5 @@ public class ResponseDtoConstants {
   }
   public static final String SAVING = "Account created successfully";
   public static final String  STATUS_201= "Account created successfully";
+  public static final String  STATUS_400= "Customer Already exist with the given mobile number!!";
 }
