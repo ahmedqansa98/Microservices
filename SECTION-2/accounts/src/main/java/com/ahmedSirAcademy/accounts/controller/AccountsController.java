@@ -18,6 +18,13 @@ public class AccountsController {
 
   @Autowired private IAccountService iaccountService;
 
+  @GetMapping("/fetch")
+  public ResponseEntity<CustomerDto> fetchAccount(@RequestParam String mobileNumber) {
+    CustomerDto getAccount = iaccountService.fetchAccount(mobileNumber);
+
+    return ResponseEntity.status(HttpStatus.OK).body(getAccount);
+  }
+
   @PostMapping("/generate")
   public ResponseEntity<ResponseDto> createdAccount(@RequestBody CustomerDto customerDto) {
     iaccountService.createCustomer(customerDto);

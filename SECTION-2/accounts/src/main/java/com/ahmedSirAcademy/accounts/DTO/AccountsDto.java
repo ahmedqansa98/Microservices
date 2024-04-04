@@ -1,6 +1,5 @@
 package com.ahmedSirAcademy.accounts.DTO;
 
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,4 +12,6 @@ public class AccountsDto {
   private String accountType;
 
   private String branchAddress;
+
+  public AccountsDto() {}
 }

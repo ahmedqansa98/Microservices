@@ -1,6 +1,5 @@
 package com.ahmedSirAcademy.accounts.entity;
 
-import com.ahmedSirAcademy.accounts.DTO.CustomerDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +17,7 @@ import lombok.Setter;
 public class Customer extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long customerId;
+  private Long customerId;
 
   private String name;
   private String email;

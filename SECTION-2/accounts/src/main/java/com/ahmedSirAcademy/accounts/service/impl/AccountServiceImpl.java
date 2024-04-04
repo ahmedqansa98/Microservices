@@ -1,11 +1,14 @@
 package com.ahmedSirAcademy.accounts.service.impl;
 
+import com.ahmedSirAcademy.accounts.DTO.AccountsDto;
 import com.ahmedSirAcademy.accounts.DTO.CustomerDto;
 import com.ahmedSirAcademy.accounts.constant.ExceptionConstant;
 import com.ahmedSirAcademy.accounts.constant.GlobalConstant;
 import com.ahmedSirAcademy.accounts.entity.Accounts;
 import com.ahmedSirAcademy.accounts.entity.Customer;
 import com.ahmedSirAcademy.accounts.exception.CustomerAlreadyExistException;
+import com.ahmedSirAcademy.accounts.exception.ResourceNotFoundException;
+import com.ahmedSirAcademy.accounts.mapper.AccountsMapper;
 import com.ahmedSirAcademy.accounts.mapper.CustomerMapper;
 import com.ahmedSirAcademy.accounts.repository.AccountsRepo;
 import com.ahmedSirAcademy.accounts.repository.CustomerRepo;
@@ -63,5 +66,26 @@ public class AccountServiceImpl implements IAccountService {
     newAccounts.setCreatedAt(LocalDateTime.now());
     newAccounts.setCreatedBy("Shahbaz");
     return newAccounts;
+  }
+
+  @Override
+  public CustomerDto fetchAccount(String mobileNumber) {
+    // if no account or customer with mobileNumber, we should through a customException.
+    Customer customer =
+        customerRepo
+            .findByMobileNumber(mobileNumber)
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+    Accounts accounts =
+        accountsRepo
+            .findByCustomerId(customer.getCustomerId())
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "Account", "CustomerId", customer.getCustomerId().toString()));
+
+    CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+    customerDto.setAccountsDto(AccountsMapper.accountsDto(accounts, new AccountsDto()));
+    return customerDto;
   }
 }
